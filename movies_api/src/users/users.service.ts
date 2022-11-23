@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { randomUUID } from 'node:crypto';
+import { handleErrorConstraintUnique } from 'src/utils/handle-error-unique.util';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +16,9 @@ export class UsersService {
     const id = randomUUID();
     const data = { ...dto, id, password: hashedPassword };
 
-    return await this.prisma.users.create({ data });
+    return await this.prisma.users
+      .create({ data })
+      .catch(handleErrorConstraintUnique);
   }
 
   async findAll(): Promise<User[]> {
@@ -35,7 +38,9 @@ export class UsersService {
   async update(id: string, dto: UpdateUserDto): Promise<User> {
     await this.findOne(id);
 
-    return await this.prisma.users.update({ where: { id }, data: dto });
+    return await this.prisma.users
+      .update({ where: { id }, data: dto })
+      .catch(handleErrorConstraintUnique);
   }
 
   async remove(id: string) {
