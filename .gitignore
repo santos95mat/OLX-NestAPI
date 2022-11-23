@@ -3,3 +3,4 @@ node_modules
 ./movies_api/dist
 ./movies_api/node_modules
 ./movies_api/.env
+./movies_api/env

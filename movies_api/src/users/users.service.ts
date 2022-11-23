@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcryptjs';
-import { randomUUID } from 'node:crypto';
+import { randomUUID } from 'crypto';
 import { handleErrorConstraintUnique } from 'src/utils/handle-error-unique.util';
 
 @Injectable()
