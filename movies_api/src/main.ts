@@ -19,6 +19,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addServer('http://localhost:3333')
     .addTag('status')
+    .addTag('users')
     .addBearerAuth()
     .build();
 
