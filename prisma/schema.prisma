@@ -21,5 +21,23 @@ model Users {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  userProducts Products[] @relation("userProducts")
+  userPurchasedProducts Products[] @relation("userPurchasedProducts")
+
   @@map("users")
+}
+
+model Products {
+  id String @id
+  name String
+  detail String
+  price Float
+  avaible Boolean
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  userProducts Users @relation("userProducts", fields: [userProductsId], references: [id], onDelete: Cascade)
+  userProductsId String @map("user_products_id")
+
+  userPurchasedProducts Users[] @relation("userPurchasedProducts")
 }

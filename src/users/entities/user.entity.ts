@@ -1,3 +1,5 @@
+import { Product } from 'src/products/entities/product.entity';
+
 export class User {
   id: string;
   name: string;
@@ -8,4 +10,7 @@ export class User {
   role: string;
   createdAt: Date;
   updatedAt: Date;
+
+  userProducts?: Product[];
+  userPurchasedProducts?: Product[];
 }
