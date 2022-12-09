@@ -21,8 +21,8 @@ export class ProductsController {
   @ApiOperation({
     summary: 'Criação de um produto',
   })
-  create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+  create(@Body() dto: CreateProductDto) {
+    return this.productsService.create(dto);
   }
 
   @Get()
@@ -35,18 +35,18 @@ export class ProductsController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'listando um produto por id',
+    summary: 'listando um produto por ID',
   })
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({
     summary: 'Editando um produto pelo ID',
   })
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productsService.update(+id, updateProductDto);
+  update(@Param('id') id: string, @Body() dto: UpdateProductDto) {
+    return this.productsService.update(id, dto);
   }
 
   @Delete(':id')
@@ -54,6 +54,6 @@ export class ProductsController {
     summary: 'Apagando um produto pelo ID',
   })
   remove(@Param('id') id: string) {
-    return this.productsService.remove(+id);
+    return this.productsService.remove(id);
   }
 }

@@ -40,4 +40,6 @@ model Products {
   userProductsId String @map("user_products_id")
 
   userPurchasedProducts Users[] @relation("userPurchasedProducts")
+
+  @@map("products")
 }
