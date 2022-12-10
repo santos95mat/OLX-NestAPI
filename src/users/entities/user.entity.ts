@@ -1,3 +1,4 @@
+import { Order } from 'src/orders/entities/order.entity';
 import { Product } from 'src/products/entities/product.entity';
 
 export class User {
@@ -12,4 +13,5 @@ export class User {
   updatedAt: Date;
 
   userProducts?: Product[];
+  orders?: Order[];
 }

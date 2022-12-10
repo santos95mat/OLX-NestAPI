@@ -1,4 +1,4 @@
-import { User } from 'src/users/entities/user.entity';
+import { Order } from 'src/orders/entities/order.entity';
 
 export class Product {
   id: string;
@@ -10,4 +10,5 @@ export class Product {
   updatedAt: Date;
 
   userProductsId: string;
+  orders?: Order[];
 }
