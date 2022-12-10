@@ -19,8 +19,10 @@ async function bootstrap() {
     .setVersion('1.0')
     .addServer('https://movies-api-nz1u.onrender.com')
     .addServer('http://localhost:3333')
-    .addTag('status')
-    .addTag('users')
+    .addTag('Auth')
+    .addTag('Users')
+    .addTag('Products')
+    .addTag('Orders')
     .addBearerAuth()
     .build();
 
