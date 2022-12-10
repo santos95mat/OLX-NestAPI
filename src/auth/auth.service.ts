@@ -14,7 +14,7 @@ export class AuthService {
     cpf: true,
     birth: true,
     email: true,
-    password: false,
+    password: true,
     role: true,
     updatedAt: true,
     createdAt: true,
