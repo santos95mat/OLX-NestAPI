@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { Order } from './entities/order.entity';
+import { randomUUID } from 'crypto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { handleErrorConstraintUnique } from 'src/utils/handle-error-unique.util';
 
 @Injectable()
 export class OrdersService {
-  create(dto: CreateOrderDto) {
-    return 'This action adds a new order';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(dto: CreateOrderDto): Promise<Order> {
+    const id = randomUUID();
+    const data = { ...dto, id };
+
+    return await this.prisma.orders
+      .create({ data })
+      .catch(handleErrorConstraintUnique);
   }
 
-  findAll() {
-    return `This action returns all orders`;
+  async findAll(): Promise<Order[]> {
+    return await this.prisma.orders.findMany();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} order`;
+  async findOne(id: string): Promise<Order> {
+    const order: Order = await this.prisma.orders.findUnique({ where: { id } });
+
+    if (!order) {
+      throw new NotFoundException(`Entrada de id ${id} não encontrada`);
+    }
+
+    return order;
   }
 
-  update(id: string, dto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async update(id: string, dto: UpdateOrderDto): Promise<Order> {
+    await this.findOne(id);
+
+    return await this.prisma.orders
+      .update({ where: { id }, data: dto })
+      .catch(handleErrorConstraintUnique);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} order`;
+  async remove(id: string) {
+    await this.findOne(id);
+
+    return await this.prisma.orders.delete({ where: { id } });
   }
 }
