@@ -30,31 +30,34 @@ export class UsersController {
   @ApiOperation({
     summary: 'Listagem de todos os usuários',
   })
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  async findAll(): Promise<User[]> {
+    return await this.usersService.findAll();
   }
 
   @Get(':id')
   @ApiOperation({
     summary: 'Lista um usuário por ID',
   })
-  findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<User> {
+    return await this.usersService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({
     summary: 'Atualização de um usuário pelo ID',
   })
-  update(@Param('id') id: string, @Body() dto: UpdateUserDto): Promise<User> {
-    return this.usersService.update(id, dto);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateUserDto,
+  ): Promise<User> {
+    return await this.usersService.update(id, dto);
   }
 
   @Delete(':id')
   @ApiOperation({
     summary: 'Deleta usuário pelo ID',
   })
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.usersService.remove(id);
   }
 }
