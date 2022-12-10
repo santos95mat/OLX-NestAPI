@@ -12,5 +12,4 @@ export class User {
   updatedAt: Date;
 
   userProducts?: Product[];
-  userPurchasedProducts?: Product[];
 }

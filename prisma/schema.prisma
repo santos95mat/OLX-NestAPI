@@ -22,7 +22,7 @@ model Users {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   userProducts Products[] @relation("userProducts")
-  userPurchasedProducts Products[] @relation("userPurchasedProducts")
+  orders Orders[]
 
   @@map("users")
 }
@@ -38,8 +38,20 @@ model Products {
 
   userProducts Users @relation("userProducts", fields: [userProductsId], references: [id], onDelete: Cascade)
   userProductsId String @map("user_products_id")
-
-  userPurchasedProducts Users[] @relation("userPurchasedProducts")
+  orders Orders[]
 
   @@map("products")
+}
+
+model Orders {
+  id String @id
+
+  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  product Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+
+  @@map("orders")
 }

@@ -10,5 +10,4 @@ export class Product {
   updatedAt: Date;
 
   userProductsId: string;
-  userPurchasedProducts?: User[];
 }
