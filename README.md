@@ -1,6 +1,6 @@
 # NEST MOVIE_API
 
-### Link para aplicação [movies-api-nz1u.onrender.com/docs](https://movies-api-nz1u.onrender.com/docs)
+### Link para aplicação [olx-nestapi.onrender.com/docs](https://olx-nestapi.onrender.com/docs)
 
 #### API desenvolvida em NEST para fins de aprendizagem
 
