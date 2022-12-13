@@ -52,8 +52,8 @@ export class CreateUserDto {
 
   @IsBoolean()
   @ApiProperty({
-    example: 'comum',
-    description: 'tipo de usuario [admin, comum, etc..]',
+    example: true,
+    description: 'se o usuário é admin ou não',
   })
   role: boolean;
 }
