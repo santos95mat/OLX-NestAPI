@@ -8,7 +8,7 @@ export class User {
   birth: string;
   email: string;
   password: string;
-  role: string;
+  role: boolean;
   createdAt: Date;
   updatedAt: Date;
 

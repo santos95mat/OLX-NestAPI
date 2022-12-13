@@ -5,6 +5,7 @@ import {
   IsString,
   MinLength,
   MaxLength,
+  IsBoolean,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -49,11 +50,10 @@ export class CreateUserDto {
   })
   password: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsBoolean()
   @ApiProperty({
     example: 'comum',
     description: 'tipo de usuario [admin, comum, etc..]',
   })
-  role: string;
+  role: boolean;
 }
