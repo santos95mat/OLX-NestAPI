@@ -67,6 +67,7 @@ export class ProductsService {
             updatedAt: true,
           },
         },
+        orders: true,
       },
     });
   }
@@ -89,6 +90,7 @@ export class ProductsService {
             updatedAt: true,
           },
         },
+        orders: true,
       },
     });
 

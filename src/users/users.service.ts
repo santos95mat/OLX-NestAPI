@@ -35,14 +35,14 @@ export class UsersService {
 
   async findAll(): Promise<User[]> {
     return await this.prisma.users.findMany({
-      select: { ...this.userSelect, userProducts: true },
+      select: { ...this.userSelect, userProducts: true, orders: true },
     });
   }
 
   async findOne(id: string): Promise<User> {
     const user: User = await this.prisma.users.findUnique({
       where: { id },
-      select: { ...this.userSelect, userProducts: true },
+      select: { ...this.userSelect, userProducts: true, orders: true },
     });
 
     if (!user) {

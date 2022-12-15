@@ -8,6 +8,12 @@ import { handleErrorConstraintUnique } from 'src/utils/handle-error-unique.util'
 
 @Injectable()
 export class OrdersService {
+  private orderSelect = {
+    id: true,
+    userId: false,
+    productId: false,
+  };
+
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateOrderDto): Promise<Order> {
@@ -20,11 +26,48 @@ export class OrdersService {
   }
 
   async findAll(): Promise<Order[]> {
-    return await this.prisma.orders.findMany();
+    return await this.prisma.orders.findMany({
+      select: {
+        ...this.orderSelect,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            cpf: true,
+            birth: true,
+            email: true,
+            role: true,
+            password: false,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        product: true,
+      },
+    });
   }
 
   async findOne(id: string): Promise<Order> {
-    const order: Order = await this.prisma.orders.findUnique({ where: { id } });
+    const order: Order = await this.prisma.orders.findUnique({
+      where: { id },
+      select: {
+        ...this.orderSelect,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            cpf: true,
+            birth: true,
+            email: true,
+            role: true,
+            password: false,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+        product: true,
+      },
+    });
 
     if (!order) {
       throw new NotFoundException(`Entrada de id ${id} não encontrada`);
