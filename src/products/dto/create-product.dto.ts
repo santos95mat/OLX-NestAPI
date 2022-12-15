@@ -39,5 +39,5 @@ export class CreateProductDto {
     example: 'a3d1217c-4c98-11ed-bdc3-0242ac120002',
     description: 'user ID',
   })
-  userProductsId: string;
+  userId: string;
 }

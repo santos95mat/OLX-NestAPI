@@ -9,6 +9,18 @@ import { handleErrorConstraintUnique } from 'src/utils/handle-error-unique.util'
 
 @Injectable()
 export class UsersService {
+  private userSelect = {
+    id: true,
+    name: true,
+    cpf: true,
+    birth: true,
+    email: true,
+    password: false,
+    role: true,
+    updatedAt: true,
+    createdAt: true,
+  };
+
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateUserDto): Promise<User> {
@@ -22,11 +34,16 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return await this.prisma.users.findMany();
+    return await this.prisma.users.findMany({
+      select: { ...this.userSelect, userProducts: true },
+    });
   }
 
   async findOne(id: string): Promise<User> {
-    const user: User = await this.prisma.users.findUnique({ where: { id } });
+    const user: User = await this.prisma.users.findUnique({
+      where: { id },
+      select: { ...this.userSelect, userProducts: true },
+    });
 
     if (!user) {
       throw new NotFoundException(`Entrada de id ${id} não encontrada`);

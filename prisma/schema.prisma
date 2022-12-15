@@ -36,8 +36,8 @@ model Products {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  userProducts Users @relation("userProducts", fields: [userProductsId], references: [id], onDelete: Cascade)
-  userProductsId String @map("user_products_id")
+  user Users @relation("userProducts", fields: [userId], references: [id], onDelete: Cascade)
+  userId String @map("user_products_id")
   orders Orders[]
 
   @@map("products")

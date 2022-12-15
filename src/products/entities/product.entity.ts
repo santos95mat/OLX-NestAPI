@@ -9,6 +9,6 @@ export class Product {
   createdAt: Date;
   updatedAt: Date;
 
-  userProductsId: string;
+  userId: string;
   orders?: Order[];
 }

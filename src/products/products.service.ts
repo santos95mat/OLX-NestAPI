@@ -13,6 +13,17 @@ import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class ProductsService {
+  private ProductSelect = {
+    id: true,
+    name: true,
+    detail: true,
+    price: true,
+    avaible: true,
+    updatedAt: true,
+    createdAt: true,
+    userId: false,
+  };
+
   constructor(private readonly prisma: PrismaService) {}
 
   async verifyAndReturnUser(id: string): Promise<User> {
@@ -26,7 +37,7 @@ export class ProductsService {
   }
 
   async create(dto: CreateProductDto): Promise<Product> {
-    const user: User = await this.verifyAndReturnUser(dto.userProductsId);
+    const user: User = await this.verifyAndReturnUser(dto.userId);
 
     if (!user.role) {
       throw new UnauthorizedException();
@@ -40,12 +51,45 @@ export class ProductsService {
   }
 
   async findAll(): Promise<Product[]> {
-    return await this.prisma.products.findMany();
+    return await this.prisma.products.findMany({
+      select: {
+        ...this.ProductSelect,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            cpf: true,
+            birth: true,
+            email: true,
+            password: false,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: string): Promise<Product> {
     const product: Product = await this.prisma.products.findUnique({
       where: { id },
+      select: {
+        ...this.ProductSelect,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            cpf: true,
+            birth: true,
+            email: true,
+            password: false,
+            role: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
     });
 
     if (!product) {
