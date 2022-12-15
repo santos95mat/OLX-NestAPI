@@ -21,6 +21,12 @@ export class UsersService {
     createdAt: true,
   };
 
+  private orderSelect = {
+    id: true,
+    userId: false,
+    productId: false,
+  };
+
   constructor(private readonly prisma: PrismaService) {}
 
   async create(dto: CreateUserDto): Promise<User> {
@@ -35,7 +41,16 @@ export class UsersService {
 
   async findAll(): Promise<User[]> {
     return await this.prisma.users.findMany({
-      select: { ...this.userSelect, userProducts: true, orders: true },
+      select: {
+        ...this.userSelect,
+        userProducts: true,
+        orders: {
+          select: {
+            ...this.orderSelect,
+            product: true,
+          },
+        },
+      },
     });
   }
 

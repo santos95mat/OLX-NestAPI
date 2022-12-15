@@ -24,6 +24,24 @@ export class ProductsService {
     userId: false,
   };
 
+  private orderSelect = {
+    id: true,
+    userId: false,
+    productId: false,
+  };
+
+  private userSelect = {
+    id: true,
+    name: true,
+    cpf: true,
+    birth: true,
+    email: true,
+    password: false,
+    role: true,
+    updatedAt: true,
+    createdAt: true,
+  };
+
   constructor(private readonly prisma: PrismaService) {}
 
   async verifyAndReturnUser(id: string): Promise<User> {
@@ -67,7 +85,14 @@ export class ProductsService {
             updatedAt: true,
           },
         },
-        orders: true,
+        orders: {
+          select: {
+            ...this.orderSelect,
+            user: {
+              select: { ...this.userSelect },
+            },
+          },
+        },
       },
     });
   }
