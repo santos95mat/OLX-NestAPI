@@ -127,7 +127,7 @@ export class ProductsService {
   }
 
   async update(id: string, dto: UpdateProductDto): Promise<Product> {
-    const user: User = await this.verifyAndReturnUser(id);
+    const user: User = await this.verifyAndReturnUser(dto.userId);
 
     if (!user.role) {
       throw new UnauthorizedException();
@@ -141,14 +141,8 @@ export class ProductsService {
   }
 
   async remove(id: string) {
-    const user: User = await this.verifyAndReturnUser(id);
-
-    if (!user.role) {
-      throw new UnauthorizedException();
-    }
-
     await this.findOne(id);
 
-    return await this.prisma.users.delete({ where: { id } });
+    return await this.prisma.products.delete({ where: { id } });
   }
 }
