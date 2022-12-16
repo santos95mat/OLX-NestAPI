@@ -49,7 +49,8 @@ export class ProductsService {
       throw new UnauthorizedException();
     }
     const id = randomUUID();
-    const data = { ...dto, id };
+    const userId = user.id;
+    const data = { ...dto, id, userId };
 
     return await this.prisma.products
       .create({ data })

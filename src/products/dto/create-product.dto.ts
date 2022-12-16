@@ -32,12 +32,4 @@ export class CreateProductDto {
     description: 'sem tem ou não o produto disponivel em estoque',
   })
   avaible: boolean;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    example: 'a3d1217c-4c98-11ed-bdc3-0242ac120002',
-    description: 'user ID',
-  })
-  userId: string;
 }
