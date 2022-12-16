@@ -44,19 +44,7 @@ export class ProductsService {
 
   constructor(private readonly prisma: PrismaService) {}
 
-  async verifyAndReturnUser(id: string): Promise<User> {
-    const user: User = await this.prisma.users.findUnique({ where: { id } });
-
-    if (!user) {
-      throw new NotFoundException(`Entrada de id ${id} não encontrada`);
-    }
-
-    return user;
-  }
-
-  async create(dto: CreateProductDto): Promise<Product> {
-    const user: User = await this.verifyAndReturnUser(dto.userId);
-
+  async create(dto: CreateProductDto, user: User): Promise<Product> {
     if (!user.role) {
       throw new UnauthorizedException();
     }
@@ -126,9 +114,11 @@ export class ProductsService {
     return product;
   }
 
-  async update(id: string, dto: UpdateProductDto): Promise<Product> {
-    const user: User = await this.verifyAndReturnUser(dto.userId);
-
+  async update(
+    id: string,
+    dto: UpdateProductDto,
+    user: User,
+  ): Promise<Product> {
     if (!user.role) {
       throw new UnauthorizedException();
     }
@@ -140,7 +130,11 @@ export class ProductsService {
       .catch(handleErrorConstraintUnique);
   }
 
-  async remove(id: string) {
+  async remove(id: string, user: User) {
+    if (!user.role) {
+      throw new UnauthorizedException();
+    }
+
     await this.findOne(id);
 
     return await this.prisma.products.delete({ where: { id } });
